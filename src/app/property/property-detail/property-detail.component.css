@@ -1,0 +1,14 @@
+img{
+    padding: 10px;
+    height: 60vh;
+    
+}
+.card{
+    min-height: 600px;
+}
+.card-footer{
+    align-items: normal;
+}
+.card-footer .btn-group{
+    width: 100%;
+}

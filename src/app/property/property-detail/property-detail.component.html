@@ -1,0 +1,176 @@
+<div class="row shadow">
+  <div class="col-sm-4 p-0">
+    <div class="card">
+      <div class="card-img-wrapper">
+        <div [ngSwitch]="property?.image">
+            <img *ngSwitchCase="property?.image"  class="card-img-top" src="assets/images/{{property?.image}}.jpg">
+            <img *ngSwitchDefault class="card-img-top" src="assets/images/house.jpg">
+        </div>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title">{{property?.name}}</h1>
+        <div>
+          <span>{{property?.bhk}} BHK {{property?.propertyType}} at {{property?.price}} INR  </span>
+        </div>
+        <div>
+          <strong>in {{property?.city}} </strong>
+        </div> <hr>
+        <div>
+          <strong>Build Area: </strong>
+          {{property?.builtArea}} sqft
+        </div>
+        <div>
+          <strong>Carpet Area: </strong>
+          {{property?.carpetArea}} sqft
+        </div>
+        <div>
+          <strong>Furnishing Type: </strong>
+         {{property?.furnishingType}}
+        </div>
+        <div>
+          <strong>Available For: </strong>
+          <span *ngIf="property?.sellRent==1">Purchase</span>
+          <span *ngIf="property?.sellRent==2">Rent</span>
+        </div>
+
+      </div>
+      <div class="card-footer">
+        <div class="btn-group d-flex">
+          <button class="btn btn-primary">Like</button>
+          <button class="btn btn-success">Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 ">
+
+    <ul class="nav nav-tabs" >
+      <li class="nav-item">
+        <button #basicTab class="nav-link" [class.active]="currTab===0" id="basic-tab" data-bs-toggle="tab" data-bs-target="#0" type="button" role="tab" aria-controls="basic" aria-selected="true" (click)="toggleTab(0)">Overview</button>
+      </li>
+      <li class="nav-item">
+        <button #pricingTab class="nav-link" [class.active]="currTab===1" id="pricing-tab" data-bs-toggle="tab" data-bs-target="#1" type="button" role="tab" aria-controls="pricing" aria-selected="false" (click)="toggleTab(1)">Address</button>
+      </li>
+      <li class="nav-item">
+        <button #addressTab class="nav-link" [class.active]="currTab===2" id="address-tab" data-bs-toggle="tab" data-bs-target="#2" type="button" role="tab" aria-controls="address" aria-selected="false" (click)="toggleTab(2)">Photo</button>
+      </li>
+      <li class="nav-item">
+        <button #detailTab class="nav-link" id="nav-detail-tab" [class.active]="currTab===3" data-bs-toggle="tab" data-bs-target="#3" type="button" role="tab" aria-controls="nav-detail" aria-selected="false" (click)="toggleTab(3)">Contact</button>
+      </li>
+    </ul>
+
+
+    <div class="tab-content"  id="nav-tabContent">
+      <div class="tab-pane fade " [class.active] = "currTab===0" [class.show]="currTab===0"   id="0" role="tabpanel" >
+
+        <div class="row">
+          <h1>Basic Details</h1>
+                    <div class="col-sm-6">
+                      <div class="heading">
+                        <strong>Project Name: </strong>
+                        <p>{{property?.name}}</p>
+                      </div>
+                      <div class="heading">
+                        <strong>Floor Number: </strong>
+                        <p>{{property?.floorNo}} of {{property?.totalFloors}}</p>
+                      </div>
+                      <div class="heading">
+                        <strong>Age of Property: </strong>
+                        <p>{{property?.age}} years</p>
+                      </div>
+                      <div class="heading">
+                        <strong>Possession On: </strong>
+                        <p>{{property?.estPossesionOn | date}}</p>
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="heading">
+                          <strong>Main Entrance</strong>
+                          <p>{{property?.mainEntrance}}</p>
+                      </div>
+
+                      <div class="heading">
+                          <strong>Gated Community</strong>
+                          <p *ngIf="property?.gated">Yes</p>
+                          <p *ngIf="!property?.gated">No</p>
+                      </div>
+
+                      <div class="heading">
+                          <strong>Security Deposit</strong>
+                          <p>{{property?.security}}</p>
+                      </div>
+                      <div class="heading">
+                          <strong>Maintenance</strong>
+                          <p>{{property?.maintenance}}</p>
+                      </div>
+                    </div>
+        </div>
+        <div class="row">
+          <h3>Description</h3>
+          <p>{{property?.description}}</p>
+        </div>
+      </div>
+      <div class="tab-pane fade " [class.active] = "currTab===1" [class.show]="currTab===1"   id="1" role="tabpanel" >
+        <div class="col-sm-12">
+          <h1>Address</h1>
+          <div class="heading">
+              <strong>{{property?.address}}</strong><br/>
+              <strong>{{property?.address2}}</strong><br/>
+              <strong>{{property?.city}}</strong>
+          </div>
+      </div>
+      </div>
+      <div class="tab-pane fade " [class.active] = "currTab===2" [class.show]="currTab===2"   id="2" role="tabpanel" >
+        <h1>Photos</h1>
+        <div id="carouselExampleDark" class="carousel carousel-dark slide">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+              <img src="assets/images/i1.jpg" class="d-block w-100" alt="img">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>Some representative placeholder content for the first slide.</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+              <img src="assets/images/i2.jpg" class="d-block w-100" alt="img">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Some representative placeholder content for the second slide.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="assets/images/i3.jpg" class="d-block w-100" alt="img">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>Some representative placeholder content for the third slide.</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="tab-pane fade " [class.active] = "currTab===3" [class.show]="currTab===3"   id="3" role="tabpanel" >
+        <h1>Contact Details</h1>
+      </div>
+
+   </div>
+
+
+
+
+  </div>
+ </div>

@@ -1,0 +1,9 @@
+.ng-invalid,.ng-touched{
+    border-color: red,
+}
+span{
+    color: red;
+}
+.card-header{
+    
+}

@@ -1,0 +1,40 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+     <a class="navbar-brand" routerLink=""  routerLinkActive = "active">
+      <img class="top-50" src="assets/images/logo.png" alt="" width="30" height="24">
+      Housing
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="" routerLinkActive = "active">Buy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/rent"  routerLinkActive = "active">Rent</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/add-property"  routerLinkActive = "active">List Property(Free)</a>
+        </li>
+      </ul>
+      <div>
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="!loggedin()">
+          <a class="nav-link" routerLink="/register"  routerLinkActive = "active">Register</a>
+        </li>
+        <li class="nav-item " *ngIf="!loggedin()">
+          <a class="nav-link" routerLink="/login"  routerLinkActive = "active">Login</a>
+        </li>
+        <li class="nav-item "*ngIf="loggedin()">
+          <a class="nav-link" routerLink=""  routerLinkActive = "active" (click)="onLogout()">LogOut</a>
+        </li>
+        <li *ngIf="loggedin()">
+          <h3>{{loggedInUser}}</h3>
+        </li>
+      </ul></div>
+    </div>
+  </div>
+</nav>
