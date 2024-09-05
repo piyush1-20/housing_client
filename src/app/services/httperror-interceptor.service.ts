@@ -42,8 +42,15 @@ export class HttpErrorInterceptorService implements HttpInterceptor{
       errorMessage = error.error.message;
     }else{
       //server error
-      if(error.status!==0){
+      if(error.status===401){
+        console.log(error)
+        return error.statusText;
+      }
+      if(error.error.errorMessage &&  error.status!==0){
         errorMessage = error.error.errorMessage;
+      }
+      if(!error.error.errorMessage && error.error && error.status!==0){
+        errorMessage = error.error;
       }
     }
     return errorMessage;

@@ -1,10 +1,11 @@
 import { NgFor } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { filter, map, Observable } from 'rxjs';
 import { IPropertyBase } from '../model/ipropertybase';
 import { Property } from '../model/property';
 import { Ikeyvaluepair } from '../model/ikeyvaluepair';
+import { environment } from '../../environments/environment';
 
 interface IPropertyBaseDictionary {
   [key: string]: IPropertyBase;
@@ -14,37 +15,43 @@ interface IPropertyBaseDictionary {
   providedIn: 'root'
 })
 export class HousingService {
+      private  base_url = environment.apiUrl;
       constructor(private http: HttpClient) { }
 
       getAllCities():Observable<string[]>{
-        return this.http.get<string[]>('http://localhost:5192/api/city');
+        return this.http.get<string[]>(this.base_url+'/City');
       }
       getPropertyTypes():Observable<Ikeyvaluepair[]>{
-        return this.http.get<Ikeyvaluepair[]>('http://localhost:5192/api/PropertyType/list');
+        return this.http.get<Ikeyvaluepair[]>(this.base_url+'/PropertyType/list');
       }
       getFurnishingTypes():Observable<Ikeyvaluepair[]>{
-        return this.http.get<Ikeyvaluepair[]>('http://localhost:5192/api/FurnishingType/list');
+        return this.http.get<Ikeyvaluepair[]>(this.base_url+ '/FurnishingType/list');
       }
 
       getProperty(id:number){
-         return this.http.get<Property>("http://localhost:5192/api/Property/detail/" +id.toString());
+         return this.http.get<Property>(this.base_url+ "/Property/detail/" +id.toString());
       }
 
       getAllProperties(SellRent?: number): Observable<Property[]> {
-        return this.http.get<Property[]>("http://localhost:5192/api/Property/list/" + SellRent?.toString());
+        return this.http.get<Property[]>(this.base_url+ "/Property/list/" + SellRent?.toString());
       }
 
 
       addProperty(property: Property) {
-         let nProp = [];
-          let savedProperty = localStorage.getItem('newProp');
-         if(savedProperty){
-          nProp = JSON.parse(savedProperty)
-          nProp = [property,...nProp]
-         }else{
-          nProp = [property]
-         }
-        localStorage.setItem('newProp', JSON.stringify(nProp));
+        const httpOptions = {
+          headers:new HttpHeaders({
+            Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+        };
+        return this.http.post(this.base_url +"/Property/add",property,httpOptions);
+      }
+      addPropertyPhoto(formData:FormData,propId:number) {
+        const httpOptions = {
+          headers:new HttpHeaders({
+            Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+        };
+        return this.http.post(this.base_url+ "/Property/add/photo/"+propId,formData,httpOptions);
       }
 
       newPropID(): number {
@@ -76,6 +83,25 @@ export class HousingService {
           return 'Less than a year';
         }
         return age.toString();
+      }
+      setPrimaryPhoto(propId:number,propPhotoId:string){
+        const httpOptions = {
+          headers:new HttpHeaders({
+            Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+        };
+        return this.http.post(this.base_url + "/property/set-primary-photo/" +(propId)+'/' + propPhotoId,{},httpOptions);
+
+      }
+
+      deletePhoto(propId:number,propPhotoId:string){
+        const httpOptions = {
+          headers:new HttpHeaders({
+            Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+        };
+        return this.http.delete(this.base_url + "/property/delete-photo/" +(propId)+'/' + propPhotoId,httpOptions);
+
       }
 
 }

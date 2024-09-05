@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { HousingService } from '../services/housing.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   standalone:true,
@@ -13,7 +15,9 @@ export class NavbarComponent implements OnInit {
 
   loggedInUser: string = "null";
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,
+    private auth:AuthService
+  ) { }
 
   ngOnInit() {
   }
@@ -25,9 +29,7 @@ export class NavbarComponent implements OnInit {
     return localStorage.getItem('token');
   }
   onLogout(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    this.router.navigate(['/login']);
+    this.auth.logout();
   }
 
 }

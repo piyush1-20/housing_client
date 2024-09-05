@@ -37,17 +37,25 @@ export class RegisterComponent implements OnInit {
       userEmail: [null, [Validators.required, Validators.email]],
       Password: [null, [Validators.required, Validators.minLength(8)]],
       Confirmpassword: [null, Validators.required],
-      userMobile: [null, [Validators.required, Validators.maxLength(10)]]
+      userMobile: [null, [Validators.maxLength(10)]]
     }, {validators: this.matchPasswordValidator});
   }
 
+  get userEmail(){
+    return this.registrationForm.get('userEmail') as FormControl;
+  }
+  get userName(){
+    return this.registrationForm.get('userName') as FormControl;
+  }
 
-  get userPassword(){
-    return this.registrationForm.get('Password')
+  get Password(){
+    return this.registrationForm.get('Password') as FormControl;
   }
-  get userConfirmpPassword(){
-    return this.registrationForm.get('Confirmpassword')
+
+  get Confirmpassword(){
+    return this.registrationForm.get('Confirmpassword') as FormControl;
   }
+
   matchPasswordValidator:ValidatorFn =(fg:AbstractControl):ValidationErrors|null=>{{
     return fg.get('Password')?.value===fg.get('Confirmpassword')?.value?null:{notMatched:true};
  }}

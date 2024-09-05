@@ -13,30 +13,24 @@ import { AlertifyService } from '../services/alertify.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  currentUser:string='';
   constructor(private authService:AuthService,private router:Router,private alertify: AlertifyService) { }
 
   ngOnInit() {
   }
-  onLogin(loginForm:NgForm){
-    console.log("login clicked")
-    // console.log(loginForm.value)
-
+  
+  onLogin(loginForm: NgForm) {
     this.authService.authUser(loginForm.value).subscribe(
       (response: Partial<UserForLogin>) => {
-        // console.log(response);
-        const user = response;
-        const tk = response.token || "default-token";
-        const mail = response.userEmail || "default-mail";
-        if(tk != "default-token" && mail!="default-mail"){
-          // console.log(user);
-          localStorage.setItem('token',tk);
-          localStorage.setItem('email',mail);
+        console.log(response);
+        if (response.token && response.userEmail) {
           this.alertify.success("Login Successful");
           this.router.navigate(['/']);
         }
+      },
+      error => {
+        this.alertify.error("Login Failed");
       }
-
     );
   }
 

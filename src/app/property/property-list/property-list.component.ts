@@ -8,6 +8,7 @@ import { PropertyCardComponent } from "../property-card/property-card.component"
 import { FilterPipe } from '../../Pipes/filter.pipe';
 import { SortPipe } from '../../Pipes/sort.pipe';
 import { FormsModule } from '@angular/forms';
+import { Property } from '../../model/property';
 
 @Component({
   standalone:true,
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PropertyListComponent implements OnInit {
     SellRent =1;
+    pp:Property[]=[];
     properties: IPropertyBase[] = [];
     today = new Date();
     City =''
@@ -35,9 +37,10 @@ export class PropertyListComponent implements OnInit {
         data=>{
           this.properties = data;
           console.log(data);
+          console.log(this.properties);
           const newPropString = localStorage.getItem('newProp');
           const newProperty = newPropString ? JSON.parse(newPropString) : null;
-          
+
           if(newProperty.SellRent == this.SellRent){
             this.properties = [newProperty,...this.properties]
           }

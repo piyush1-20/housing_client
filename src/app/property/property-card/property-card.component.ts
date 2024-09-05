@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { IProperty } from '../../model/iproperty';
 import { IPropertyBase } from '../../model/ipropertybase';
 @Component({
-  
+
   standalone:true,
   selector: 'app-property-card',
   templateUrl: './property-card.component.html',
@@ -17,10 +17,14 @@ export class PropertyCardComponent implements OnInit {
   property!: IPropertyBase;
   @Input()
   hideIcons: boolean = false;
+  
 
   constructor() { }
 
   ngOnInit() {
   }
+
+
+
 
 }

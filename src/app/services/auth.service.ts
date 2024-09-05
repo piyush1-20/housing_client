@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserForLogin, UserToRegister } from '../model/user';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 interface User {
   userEmail: string;
   userPassword: string;
@@ -10,35 +12,41 @@ interface User {
 })
 
 export class AuthService {
+currentUser:number|null = null;
+private base_url = environment.apiUrl;
 
 constructor(private http:HttpClient) { }
 
- authUser(user: UserForLogin){
-
-  return this.http.post("http://localhost:5192/api/account/login",user);
-    // let UserArray: User[] = [];
-
-    // const usersFromStorage = localStorage.getItem('Users');
-    // // console.log(usersFromStorage)
-    // if (usersFromStorage) {
-    //   UserArray = JSON.parse(usersFromStorage);
-    // }
-    // // console.log(usersFromStorage)
-    // return UserArray.find((p: User) => p.userEmail === user.userEmail && p.userPassword === user.userPassword);
-  }
+authUser(user: UserForLogin): Observable<any> {
+  return this.http.post(this.base_url+"/account/login", user).pipe(
+    tap((response: any) => {
+      this.currentUser = response.id; // Assuming the response contains the user email
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('email', response.userEmail);
+      localStorage.setItem('id',response.id);
+    })
+  );
+}
 
 
   addUser(user: UserToRegister){
-    return this.http.post("http://localhost:5192/api/account/register",user);
-    // let users = [];
-    // let savedUser =localStorage.getItem('Users');
-    // if(savedUser){
-    //   users = JSON.parse(savedUser);
-    //   users = [user,...users];
-    // }else{
-    //   users =[user];
-    // }
-    // localStorage.setItem('Users',JSON.stringify(users))
+    return this.http.post(this.base_url + "/account/register",user);
+  }
+
+
+  getCurrentUser(): number | null {
+    if (this.currentUser) {
+      return this.currentUser;
+    }
+    return null;
+  }
+
+  logout() {
+    this.currentUser = null;
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+
   }
 
 }

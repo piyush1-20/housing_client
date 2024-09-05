@@ -1,14 +1,16 @@
+import { Photo } from "./photo";
+
 export interface IPropertyBase {
-    id: number|null;
-    sellRent: number|null;
+    id: number;
+    sellRent: number;
     name: string;
-    propertyType: string|null;
+    propertyType: string;
     furnishingType: string;
     price: number|null;
     bhk: number;
-    builtArea: number;
+    builtArea: number|null;
     city: string;
-    readyToMove: number;
-    image: string ;
-    estPossesionOn?: Date;
+    readyToMove: boolean;
+    photo: string ;
+    estPossesionOn: Date|null;
   }
