@@ -7,8 +7,8 @@
 
 <label class="m-2">Sort By:</label>
 <select [(ngModel)]="sortParam" >
-  <option value="City">City</option>
-  <option value="Price">Price</option>
+  <option value="city">City</option>
+  <option value="price">Price</option>
 </select>
 <button class="m-2" type="button" (click)="onToggle()">
     <i *ngIf="Order==='asc'" class="fas fa-sort-up"></i>
@@ -17,7 +17,7 @@
 <!-- <button type="button" (click)="onToggle()">Order</button> -->
 
 <div class="row">
-  <div *ngFor="let property of properties|filter:SelectedCity:'City' | sort:[sortParam,Order]" class="col-sm-4">
+  <div *ngFor="let property of properties|filter:SelectedCity:'city' | sort:[sortParam,Order]" class="col-sm-4">
     <div class="shadow-lg p-3 mb-4">
         <app-property-card [property]="property"></app-property-card>
     </div>

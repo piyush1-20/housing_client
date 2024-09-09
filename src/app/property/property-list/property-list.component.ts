@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, input, OnInit } from '@angular/core';
 import { HousingService } from '../../services/housing.service';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -27,7 +27,7 @@ export class PropertyListComponent implements OnInit {
     Order='asc'
     sortParam=''
 
-  constructor(private route: ActivatedRoute  ,private housing:HousingService) { }
+  constructor(private route: ActivatedRoute  ,private housing:HousingService ,private cd:ChangeDetectorRef ) { }
 
   ngOnInit() {
       if(this.route.snapshot.url.toString()){
@@ -50,11 +50,15 @@ export class PropertyListComponent implements OnInit {
   }
   onCity(){
     this.SelectedCity = this.City
+    this.cd.detectChanges();
+
+    // console.log(this.SelectedCity);
   }
   onCityClear(){
     this.SelectedCity=''
     this.City=''
   }
+
   onToggle(){
     if(this.Order==='asc'){
       this.Order ='desc'
