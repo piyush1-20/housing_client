@@ -5,24 +5,24 @@
   <div class="card-body">
     <form action="" [formGroup]="registrationForm"   (ngSubmit)="onSubmit()">
       <div class="form-group col-12">
-        <label for="userName">Name</label>
+        <label for="userName" class="required-field">Name</label>
         <input type="text" class="form-control" formControlName="userName">
-        <span class="error-block" *ngIf="!userName.valid && userName.touched">
+        <span class="error-block" *ngIf="!userName.valid && (userName.touched || saveClicked)">
           Please Provide Name.
         </span>
       </div>
       <div class="form-group col-12">
-        <label for="userEmail">Email</label>
+        <label for="userEmail"  class="required-field">Email</label>
         <input type="email" class="form-control" formControlName="userEmail">
-        <span class="error-block" *ngIf="!userEmail.valid && userEmail.touched">
+        <span class="error-block" *ngIf="!userEmail.valid && (userEmail.touched || saveClicked)">
           <span *ngIf="userEmail.hasError('required')">Please provide email id</span>
           <span *ngIf="userEmail.hasError('email')">Please provide valid email id</span>
         </span>
       </div>
       <div class="form-group col-12">
-        <label for="Password">Password</label>
+        <label for="Password"  class="required-field">Password</label>
         <input type="password" class="form-control" formControlName="Password" >
-        <span class="error-block" *ngIf="!Password.valid && Password.touched">
+        <span class="error-block" *ngIf="!Password.valid && (Password.touched ||saveClicked)">
           <span *ngIf="Password.hasError('required')">Please Provide Password. </span>
           <span *ngIf="Password.hasError('minlength')">Password should not be lesser than 8 characters.</span>
         </span>
@@ -30,7 +30,7 @@
       <div class="form-group col-12">
         <label for="password">Confirm Password</label>
         <input type="password" class="form-control" formControlName="Confirmpassword" required>
-        <span class="error-block" *ngIf="!Confirmpassword.valid && Confirmpassword.touched">
+        <span class="error-block" *ngIf="!Confirmpassword.valid && (Confirmpassword.touched ||saveClicked)">
           <span *ngIf="Confirmpassword.hasError('required')">Please Confirm Password. </span>
          </span>
          <span class="error-block" *ngIf="registrationForm.hasError('notMatched') && Confirmpassword.valid" >Password not matched</span>
@@ -44,8 +44,8 @@
 
 
       <div class="form-group col-12">
-        <button type="submit" class="btn btn-primary m-2">Save</button>
-        <button type="reset" class="btn btn-primary">Cancel</button>
+        <button type="submit" class="btn btn-primary m-2" (click)="onSave()">Save</button>
+        <button type="reset" class="btn btn-primary">Reset</button>
       </div>
       <!-- <div>
         Form values: {{registrationForm.value|json}} <br>

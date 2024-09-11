@@ -1,12 +1,24 @@
+
 <label class="m-2">Filter City:</label>
-<input type="text"  [(ngModel)]="City">
+<select [(ngModel)]="SelectedCity" >
+  <option value="">--Select City--</option>
+  <option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</option>
+</select>
+<!-- <button type="button" >Search</button>
+<button type="button" (click)="onCityClear()">Clear</button> -->
+
+
+
+<!-- <label class="m-2">Filter City:</label>
+<input type="text" placeholder="e.g. Delhi"  [(ngModel)]="City"  (keydown.enter)="onCity()">
 <button type="button" (click)="onCity()">Search</button>
-<button type="reset" (click)="onCityClear()">Clear</button>
+<button type="reset" (click)="onCityClear()">Clear</button> -->
 
 
 
 <label class="m-2">Sort By:</label>
 <select [(ngModel)]="sortParam" >
+  <option value="">--Choose Parameter--</option>
   <option value="city">City</option>
   <option value="price">Price</option>
 </select>

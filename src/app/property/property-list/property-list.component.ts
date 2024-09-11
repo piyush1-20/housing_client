@@ -26,6 +26,7 @@ export class PropertyListComponent implements OnInit {
     SelectedCity=''
     Order='asc'
     sortParam=''
+    cities:any[]=[];
 
   constructor(private route: ActivatedRoute  ,private housing:HousingService ,private cd:ChangeDetectorRef ) { }
 
@@ -47,9 +48,15 @@ export class PropertyListComponent implements OnInit {
         }
       )
 
+      this.housing.getAllCities().subscribe(data=>{
+        this.cities = data;
+        console.log(data);
+        this.cd.detectChanges();
+      })
+
   }
-  onCity(){
-    this.SelectedCity = this.City
+  onCity(city:string){
+    this.SelectedCity = city
     this.cd.detectChanges();
 
     // console.log(this.SelectedCity);

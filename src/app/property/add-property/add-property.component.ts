@@ -51,38 +51,16 @@ export class AddPropertyComponent implements OnInit {
     private router:Router,
     private cd: ChangeDetectorRef,
     private datePipe :DatePipe,
-    private alertify:AlertifyService) { }
+    private alertify:AlertifyService) {
+      const ml= localStorage.getItem('email')
+      if(!ml){
+        console.log('You must login before adding a property')
+        this.alertify.error('You must login before adding a property');
+        this.router.navigate(['/login']);
+      }
+      this.createProperty();
 
 
-  propertyView: IProperty = {
-    id: 0,
-    name: '',
-    price: 0,
-    sellRent: 0,
-    propertyType: '',
-    Description: '',
-    furnishingType: '',
-    bhk: 0,
-    builtArea: 0,
-    city: '',
-    readyToMove: false,
-    photo: "",
-    estPossesionOn: null
-  };
-  ngOnInit() {
-    const ml= localStorage.getItem('email')
-    if(!ml){
-      console.log('You must login before adding a property')
-      this.alertify.error('You must login before adding a property');
-      this.router.navigate(['/login']);
-    }
-    this.createProperty();
-
-    this.housing.getAllCities().subscribe(data=>{
-      this.cityList = data;
-      console.log(data);
-      this.cd.detectChanges();
-    })
     this.housing.getPropertyTypes().subscribe(data=>{
       this.propertyTypes = data;
       console.log(data);
@@ -100,9 +78,44 @@ export class AddPropertyComponent implements OnInit {
     // });
     this.property.id = this.housing.newPropID();
     console.log(this.route)
+    }
+
+
+    propertyView: IProperty = {
+      id: 0,
+      name: '',
+      price: 0,
+      sellRent: 0,
+      propertyType: '',
+      Description: '',
+      furnishingType: '',
+      bhk: 0,
+      builtArea: 0,
+      city: '',
+      readyToMove: false,
+      photo: "",
+      estPossesionOn: null
+    };
+    ngOnInit() {
+      this.housing.getAllCities().subscribe(data => {
+        this.cityList = data;
+        console.log(data);
+
+        // Update the form control once the cityList is defined
+        console.log(this.cityList)
+        if (this.cityList.length > 0) {
+          var formControl1 = this.propertyForm.get('basic.City')
+           formControl1?.setValue(this.cityList[0].name);
+        }
+
+        // Manually trigger change detection if needed
+        this.cd.detectChanges();
+      });
+
   }
 
   createProperty() {
+
     this.propertyForm = this.fb.group({
       basic: this.fb.group({
         SellRent: [null , Validators.required],

@@ -7,20 +7,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any[], filterString:string, propName:string): any[] {
-    console.log("Filter called")
-    console.log(filterString)
-    console.log(value);
+    filterString = filterString.toLowerCase();
     const resultArray =[];
     if(value.length===0 || filterString==='' || propName===''){
         return value;
     }
     for(const item of value){
-      if(item[propName]===filterString){
+      const v = item[propName].toLowerCase();
+      if(v===filterString){
           resultArray.push(item);
       }
     }
-    console.log("resultArray")
-    console.log(resultArray)
+    // console.log("resultArray")
+    // console.log(resultArray)
     return resultArray;
   }
 

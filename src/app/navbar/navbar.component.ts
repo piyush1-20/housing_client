@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   loggedin(){
     const p = localStorage.getItem('email');
     if(p){
-      this.loggedInUser = p;
+      this.loggedInUser = p.split('@')[0];
     }
     return localStorage.getItem('token');
   }

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-8 shadow-lg">
+  <div class="col-8 shadow-lg p-3">
     <div class="card">
         <div class="card-header">
           <h3>List New Property</h3>
@@ -29,7 +29,7 @@
             <div class="form-group col-12 m-2">
 
               <div class="form-group col-12">
-                <div class="header m-2">I want to</div>
+                <div class="header m-2 required-field">I want to</div>
                 <div class="btn-group" btnRadioGroup >
                   <input type="radio" class="btn-check" formControlName="SellRent" name="SellRent" id="sell" value="1" checked>
                   <label class="btn btn-outline-primary" for="sell" >Sell</label>
@@ -42,7 +42,7 @@
               </div>
 
               <div class="form-group col-12">
-                <p>BHK</p>
+                <p class="required-field">BHK</p>
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                   <div *ngFor="let b of [1,2,3,4]; let i = index">
                     <input type="radio"
@@ -63,7 +63,7 @@
               </div>
 
               <div class="form-group col-12">
-                <p>Property Type</p>
+                <p class="required-field">Property Type</p>
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                   <div *ngFor="let b of propertyTypes; let i = index">
                     <input type="radio"
@@ -84,7 +84,7 @@
               </div>
 
               <div class="form-group col-12">
-                <p>Furnishing Type</p>
+                <p class="required-field">Furnishing Type</p>
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                   <div *ngFor="let b of furnishingTypes">
                     <input type="radio"
@@ -105,9 +105,9 @@
               </div>
 
               <div class="form-group col-12">
-                <label for="City">City</label>
+                <label for="City" class="required-field">City</label>
                 <select #City (change)="onCityChange(City.value)" class="form-control" formControlName="City" >
-                  <option value="" > --Select City --</option>
+                  <!-- <option value="" selected > --Select City --</option> -->
                   <option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</option>
                 </select>
                 <div class="error-block" *ngIf="CityControl.invalid &&   (CityControl.touched || nextClicked || showError)">
@@ -116,7 +116,7 @@
               </div>
 
               <div class="form-group col-12">
-                <label>Building / Society / Project Name</label>
+                <label class="required-field">Building / Society / Project Name</label>
                 <input
                   #name
                   (keyup)="propertyView.name = name.value"
@@ -137,7 +137,7 @@
               <div class="form-group col-12 m-2">
 
                 <div class="form-group col-12">
-                  <label for="Price">Price (in INR)</label>
+                  <label for="Price" class="required-field">Price (in INR)</label>
                   <input #price (keyup)="propertyView.price = +price.value" type="number" class="form-control" formControlName="Price" >
                   <div class="error-block" *ngIf="PriceControl.invalid && (PriceControl.touched || nextClicked || showError)">
                     Please Enter Price.
@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="form-group col-12">
-                  <label for="BuiltArea">Built Area (in sqft)</label>
+                  <label for="BuiltArea" class="required-field">Built Area (in sqft)</label>
                   <input type="number" class="form-control" formControlName="BuiltArea" #builtarea (keyup)="propertyView.builtArea=+builtarea.value">
                   <div class="error-block" *ngIf="BuiltAreaControl.invalid && (BuiltAreaControl.touched || nextClicked ||showError)">
                     Please Enter Area.
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="form-group col-12">
-                  <label for="CarpetArea">Carpet Area  (in sqft)</label>
+                  <label for="CarpetArea" >Carpet Area  (in sqft)</label>
                   <input type="number" class="form-control" formControlName="CarpetArea">
                 </div>
 
@@ -176,7 +176,7 @@
             <div class="tab-pane fade"  [class.active] = "currTab===2" [class.show]="currTab===2" id="2" role="tabpanel" formGroupName="address"  >
               <div class="form-group col-12 m-2">
                 <div class="form-group col-12">
-                  <label>Address</label>
+                  <label class="required-field">Address</label>
                   <input type="text" class="form-control" formControlName="Address" >
                   <div class="error-block" *ngIf="Address.invalid && (Address.touched || nextClicked || showError)">
                     Please give the address of the property.
@@ -194,7 +194,7 @@
                 </div>
 
                 <div class="form-group col-12">
-                  <label>Landmark</label>
+                  <label class="required-field">Landmark</label>
                   <input type="text" class="form-control" formControlName="Address2" >
                   <div class="error-block" *ngIf="Landmark.invalid && (Landmark.touched || nextClicked ||showError)">
                     Please provide landmark.
@@ -209,7 +209,7 @@
             <div class="tab-pane fade"  [class.active] = "currTab===3" [class.show]="currTab===3" id="3" role="tabpanel" formGroupName="details" >
               <div class="form-group col-12 m-2">
                 <div class="form-group col-12">
-                    <p>Ready to Move</p>
+                    <p class="required-field">Ready to Move</p>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input #readyToMove (change)="propertyView.readyToMove = true" type="radio" class="btn-check" name="RTM"  formControlName="RTM" value="1"  id="yes" checked >
                         <label class="btn btn-outline-primary" for="yes">Yes</label>
@@ -223,8 +223,8 @@
 
 
                     <div  class="form-group col-12">
-                      <label *ngIf="propertyView.readyToMove"> Establishment Date</label>
-                      <label *ngIf="!propertyView.readyToMove">Possession Date</label><br>
+                      <label *ngIf="propertyView.readyToMove" class="required-field"> Establishment Date</label>
+                      <label *ngIf="!propertyView.readyToMove" class="required-field">Possession Date</label><br>
                       <input type="date" formControlName="PossessionOn" #possessiondate (change)="propertyView.estPossesionOn=updatePossession(possessiondate.value)" >
                     </div>
                     <div class="error-block" *ngIf="PossessionOn.invalid && (PossessionOn.touched ||  nextClicked ||showError) && propertyView.readyToMove">
@@ -269,7 +269,7 @@
                 </div>
 
                 <div class="col-12 form-group">
-                  <label for="description">Description</label>
+                  <label for="description" class="required-field">Description</label>
                   <div class="textarea"> <textarea class="col-12" rows="8" name="Description" formControlName="Description"></textarea>
                   <div class="error-block" *ngIf="Description.invalid && (Description.touched || showError|| nextClicked)">Please describe the property.</div>
                 </div>
@@ -304,7 +304,7 @@
         <div class="card-header">
             <h3>Property Preview</h3>
         </div>
-        <div>
+        <div >
           <app-property-card [property]="propertyView" [hideIcons]="true"></app-property-card>
         </div>
       </div>

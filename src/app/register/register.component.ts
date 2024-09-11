@@ -18,7 +18,7 @@ import { AlertifyService } from '../services/alertify.service';
 
 export class RegisterComponent implements OnInit {
   registrationForm!: FormGroup;
-
+  saveClicked = false;
   constructor(private fb: FormBuilder,private auth:AuthService,private router:Router,private alertify:AlertifyService) { }
 
   ngOnInit() {
@@ -31,13 +31,24 @@ export class RegisterComponent implements OnInit {
     // })
     this.createRegistrationform()
   }
+
+  mobileNumberLengthValidator(minLength: number, maxLength: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) return null; // If there's no value, don't validate (or you can handle it differently if needed)
+
+      const valid = value.length >= minLength && value.length <= maxLength;
+      return valid ? null : { mobileLength: { minLength, maxLength } };
+    };
+  }
+
   createRegistrationform() {
     this.registrationForm =  this.fb.group({
       userName: [null, Validators.required],
       userEmail: [null, [Validators.required, Validators.email]],
       Password: [null, [Validators.required, Validators.minLength(8)]],
       Confirmpassword: [null, Validators.required],
-      userMobile: [null, [Validators.maxLength(10)]]
+      userMobile: [null, [Validators.maxLength(10), this.mobileNumberLengthValidator(10, 10)]]
     }, {validators: this.matchPasswordValidator});
   }
 
@@ -54,6 +65,9 @@ export class RegisterComponent implements OnInit {
 
   get Confirmpassword(){
     return this.registrationForm.get('Confirmpassword') as FormControl;
+  }
+  get UserMobile(){
+    return this.registrationForm.get('userMobile') as FormControl;
   }
 
   matchPasswordValidator:ValidatorFn =(fg:AbstractControl):ValidationErrors|null=>{{
@@ -84,5 +98,7 @@ export class RegisterComponent implements OnInit {
       this.userSubmitted = false;
       this.registrationForm.reset();
     }
-
+    onSave(){
+      this.saveClicked=true;
+    }
 }

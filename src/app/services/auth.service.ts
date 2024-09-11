@@ -46,7 +46,6 @@ authUser(user: UserForLogin): Observable<any> {
     localStorage.removeItem('id');
     localStorage.removeItem('token');
     localStorage.removeItem('email');
-
   }
 
 }
