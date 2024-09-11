@@ -1,3 +1,12 @@
+# Project Snapshots
+![i4](https://github.com/user-attachments/assets/d0457237-2712-40bb-8930-64a7cdde6829)
+![i3](https://github.com/user-attachments/assets/82021b63-b316-4ae6-a5f8-1e8c892e0291)
+![i2](https://github.com/user-attachments/assets/ad2b0c7e-d255-4346-ad7d-0068d80a146c)
+![i1](https://github.com/user-attachments/assets/27021f8f-1c65-49ad-a24d-98ae18504509)
+
+
+
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
